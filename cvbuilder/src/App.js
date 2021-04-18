@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Button from "@material-ui/core/Button";
 import General from "./components/generalsection";
 import Work from "./components/worksection";
 import Education from "./components/educationsection";
@@ -13,7 +14,7 @@ class App extends Component {
       name: "",
       email: "",
       phone: "",
-      picture: "",
+      picture: null,
       school: "",
       degree: "",
       startSchool: "",
@@ -23,10 +24,75 @@ class App extends Component {
       description: "",
       startWork: "",
       endWork: "",
-      GeneralData: {},
-      EducationData: {},
-      WorkData: {},
+      GeneralData: [],
+      EducationData: [],
+      WorkData: [],
     };
+
+    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.onSubmitHandlerGeneral = this.onSubmitHandlerGeneral.bind(this);
+    this.onSubmitHandlerWork = this.onSubmitHandlerWork.bind(this);
+    this.onSubmitHandlerEducation = this.onSubmitHandlerEducation.bind(this);
+    this.onChangeHandlerPicture = this.onChangeHandlerPicture.bind(this);
+  }
+
+  onChangeHandler(e) {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  }
+  onChangeHandlerPicture(e) {
+    if (e.target.files && e.target.files[0]) {
+      let img = e.target.files[0];
+      this.setState({
+        picture: URL.createObjectURL(img),
+      });
+    }
+  }
+
+  onSubmitHandlerGeneral() {
+    if (this.state.GeneralData.length > 0) return;
+    this.setState({
+      GeneralData: this.state.GeneralData.concat({
+        ourName: this.state.name,
+        ourEmail: this.state.email,
+        ourPhone: this.state.phone,
+      }),
+      name: "",
+      phone: "",
+      email: "",
+    });
+  }
+
+  onSubmitHandlerEducation(e) {
+    this.setState({
+      EducationData: this.state.EducationData.concat({
+        ourSchool: this.state.school,
+        ourDegree: this.state.degree,
+        ourStartSchool: this.state.startSchool,
+        ourEndSchool: this.state.endSchool,
+      }),
+      school: "",
+      degree: "",
+      startSchool: "",
+      endSchool: "",
+    });
+  }
+  onSubmitHandlerWork(e) {
+    this.setState({
+      WorkData: this.state.WorkData.concat({
+        ourCompany: this.state.company,
+        ourWorkTitle: this.state.workTitle,
+        ourDescription: this.state.description,
+        ourStartWork: this.state.startWork,
+        ourEndWork: this.state.endWork,
+      }),
+      company: "",
+      workTitle: "",
+      description: "",
+      startWork: "",
+      endWork: "",
+    });
   }
 
   render() {
@@ -51,16 +117,34 @@ class App extends Component {
     return (
       <div className="main-container">
         <header></header>
-        <General infoGeneral={[name, email, phone, picture]} />
-        <Education infoEducation={[school, degree, startSchool, endSchool]} />
+        <General
+          onChangeHandler={this.onChangeHandler}
+          infoGeneral={[name, email, phone, picture]}
+          onSubmitHandler={this.onSubmitHandlerGeneral}
+          onChangeHandlerPicture={this.onChangeHandlerPicture}
+        />
+        <Education
+          onChangeHandler={this.onChangeHandler}
+          infoEducation={[school, degree, startSchool, endSchool]}
+          onSubmitHandler={this.onSubmitHandlerEducation}
+        />
         <Work
+          onChangeHandler={this.onChangeHandler}
           infoWork={[company, workTitle, description, startWork, endWork]}
+          onSubmitHandler={this.onSubmitHandlerWork}
         />
-        <Paper
-          GeneralData={GeneralData}
-          EducationData={EducationData}
-          WorkData={WorkData}
-        />
+        <Button>Download PDF CV</Button>
+        {this.state.GeneralData.length > 0 &&
+          this.state.EducationData.length > 0 &&
+          this.state.WorkData.length > 0 && (
+            <Paper
+              onChangeHandler={this.onChangeHandler}
+              picture={picture}
+              GeneralData={GeneralData}
+              EducationData={[EducationData]}
+              WorkData={[WorkData]}
+            />
+          )}
       </div>
     );
   }
