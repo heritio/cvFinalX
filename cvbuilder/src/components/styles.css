@@ -3,3 +3,52 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.white {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+}
+
+.generalinfo {
+  flex-basis: 1;
+}
+
+.education {
+  display: flex;
+  -ms-flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.work {
+}
+.pic {
+  width: 80px;
+  height: auto;
+  border-radius: 50%;
+}
+.title {
+  width: max-content;
+  font-size: 50px;
+}
+.phone-email {
+  font-size: 1rem;
+  width: 100%;
+}
+
+.work-education {
+  flex-basis: 2;
+}
+.cv-color {
+  background-color: white;
+  width: 100%;
+}
+
+.marg {
+  margin: 15px;
+  width: max-content;
+}
+
+.wrap {
+  word-wrap: normal;
+}

@@ -42,3 +42,9 @@
   margin: 5em auto;
   background-color: #61dafb;
 }
+
+header {
+  text-align: center;
+  margin: 1.5rem;
+  font-size: 3rem;
+}

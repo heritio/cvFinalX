@@ -5,6 +5,7 @@ import Work from "./components/worksection";
 import Education from "./components/educationsection";
 import Paper from "./components/paper";
 import "./App.css";
+import ReactToPrint from "react-to-print";
 
 class App extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class App extends Component {
   }
 
   onSubmitHandlerGeneral() {
-    if (this.state.GeneralData.length > 0) return;
+    this.state.GeneralData.length = 0;
     this.setState({
       GeneralData: this.state.GeneralData.concat({
         ourName: this.state.name,
@@ -65,6 +66,7 @@ class App extends Component {
   }
 
   onSubmitHandlerEducation(e) {
+    if (this.state.EducationData.length > 1) return;
     this.setState({
       EducationData: this.state.EducationData.concat({
         ourSchool: this.state.school,
@@ -79,6 +81,7 @@ class App extends Component {
     });
   }
   onSubmitHandlerWork(e) {
+    if (this.state.EducationData.length > 2) return;
     this.setState({
       WorkData: this.state.WorkData.concat({
         ourCompany: this.state.company,
@@ -116,7 +119,7 @@ class App extends Component {
     } = this.state;
     return (
       <div className="main-container">
-        <header></header>
+        <header>CV Builder</header>
         <General
           onChangeHandler={this.onChangeHandler}
           infoGeneral={[name, email, phone, picture]}
@@ -133,18 +136,19 @@ class App extends Component {
           infoWork={[company, workTitle, description, startWork, endWork]}
           onSubmitHandler={this.onSubmitHandlerWork}
         />
-        <Button>Download PDF CV</Button>
-        {this.state.GeneralData.length > 0 &&
-          this.state.EducationData.length > 0 &&
-          this.state.WorkData.length > 0 && (
-            <Paper
-              onChangeHandler={this.onChangeHandler}
-              picture={picture}
-              GeneralData={GeneralData}
-              EducationData={[EducationData]}
-              WorkData={[WorkData]}
-            />
-          )}
+        <ReactToPrint
+          trigger={() => <Button>Download PDF CV</Button>}
+          content={() => this.componentRef}
+        />
+
+        <Paper
+          ref={(el) => (this.componentRef = el)}
+          onChangeHandler={this.onChangeHandler}
+          picture={picture}
+          GeneralData={GeneralData}
+          EducationData={EducationData}
+          WorkData={WorkData}
+        />
       </div>
     );
   }
