@@ -81,7 +81,7 @@ function Work(props) {
       />
       <Button
         color={"secondary"}
-        variant={"outlined"}
+        variant={"contained"}
         onClick={props.onSubmitHandler}
       >
         Add Work Info

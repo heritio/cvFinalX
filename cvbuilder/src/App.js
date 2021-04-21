@@ -137,7 +137,11 @@ class App extends Component {
           onSubmitHandler={this.onSubmitHandlerWork}
         />
         <ReactToPrint
-          trigger={() => <Button>Download PDF CV</Button>}
+          trigger={() => (
+            <Button color={"secondary"} variant={"contained"}>
+              Download PDF CV
+            </Button>
+          )}
           content={() => this.componentRef}
         />
 

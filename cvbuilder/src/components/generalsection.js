@@ -72,7 +72,7 @@ function General(props) {
       />
       <Button
         color={"secondary"}
-        variant={"outlined"}
+        variant={"contained"}
         onClick={props.onSubmitHandler}
       >
         Add General Info
